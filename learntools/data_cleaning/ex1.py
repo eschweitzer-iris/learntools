@@ -66,10 +66,10 @@ dropped_columns = cols_in_original_dataset - cols_in_na_dropped
     
 class ImputeAutomatically(EqualityCheckProblem):
     _var = 'sf_permits_with_na_imputed'
-    _expected = sf_permits.fillna(method='bfill', axis=0).fillna(0)
-    _hint = ("Use the `.fillna()` method twice.")
+    _expected = sf_permits.bfill(limit=1).fillna(0)
+    _hint = "Use the `.bfill` method before the `.fillna()` method."
     _solution = CS(
-"""sf_permits_with_na_imputed = sf_permits.fillna(method='bfill', axis=0).fillna(0)
+"""sf_permits_with_na_imputed = sf_permits.bfill(limit=1).fillna(0)
 """)
                
 qvars = bind_exercises(globals(), [
